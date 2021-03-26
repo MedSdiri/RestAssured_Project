@@ -19,21 +19,24 @@ public class VerifyingResponseInTheChain extends SpartanNoAuthBaseTest {
 
 
         given()
-                .log().all() // this will log the request
-                .pathParam("id",16).
+                .log().all()
+                //      .log().uri()  // just for the request url
+                //      .log().body()   // for logging request body
+                //      .log().params() // logging only request parameters
+                //      .log().method() // just log the http method
+                //      .log().ifValidationFails() // only log the request if validation in then section has failed
+                .pathParam("id",100).
                 when()
                 .get("/spartans/{id}").
                 then()
-                .log().all() // this will log the response
-                .statusCode(200)
-                .header("Content-Type", is("application/json") )
-                .contentType("application/json")
-                .body("id", equalTo(16) )
-                .body("name" , is("Wonder Woman") )
-                .body("gender" , is("Female") )
-                .body("phone" , equalTo(9234567890L))
-
-        ;
+//                .log().all() // this will log the response
+//                .log().body()
+//                .log().ifValidationFails()
+//                .log().status()
+//                .log().headers()
+//                .log().ifError() // anything not 2xx status is seen as error for this method
+//                .log().ifStatusCodeIsEqualTo(200)
+                .statusCode(200) ;
 
 
     }
