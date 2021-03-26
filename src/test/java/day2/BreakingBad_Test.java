@@ -39,11 +39,44 @@ public class BreakingBad_Test {
                    .all()
                    .statusCode(200)
                    .contentType("application/json; charset=utf-8")
-
-
-
                 ;
 
     }
+
+    @DisplayName("Test Get /characters/{char_id}")
+    @Test
+    public void test1Character(){
+
+        given()
+                .pathParam("char_id" , 1 )
+                .log().uri().
+                when()
+                .get("/characters/{char_id}").
+                then()
+                .log().all()
+                .statusCode(200)
+                .header("Content-Type","application/json; charset=utf-8")
+                .contentType("application/json; charset=utf-8")
+        ;
+    }
+
+    @DisplayName("Test Get /episodes/{episode_id}")
+    @Test
+    public void test1Episode(){
+
+        given()
+                .pathParam("episode" , 60 )
+                .log().uri().
+                when()
+                .get("/episodes/{episode}").
+                then()
+                .log().all()
+                .statusCode(200)
+                .header("Content-Type","application/json; charset=utf-8")
+                .contentType("application/json; charset=utf-8")
+        ;
+    }
+
+
 
 }
