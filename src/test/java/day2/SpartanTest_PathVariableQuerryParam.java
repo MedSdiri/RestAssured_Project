@@ -19,11 +19,23 @@ public class SpartanTest_PathVariableQuerryParam extends SpartanNoAuthBaseTest {
 
     // Iwant to provide 100 as path variable|parameter
     // I want to provide accept header
-        given()
+       Response r1 =
+                given()
                 .header("Accept", "application/json")
                 .pathParam("spartan_id", "100")
                 .when()
-                .get("/spartans/{spartan_id}").prettyPrint();
+                .get("/spartans/{spartan_id}")
+               .prettyPeek()
+               ;
+        ;
+
+       Response r2 =
+       given()
+                .accept("application/json")
+                .when()
+                .get("/spartans/{spartan_id}", 100)
+                .prettyPeek()
+                ;
 
 
 
