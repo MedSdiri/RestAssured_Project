@@ -10,8 +10,8 @@ import static io.restassured.RestAssured.* ;
 import static org.hamcrest.Matchers.* ;
 import test_util.SpartanNoAuthBaseTest;
 
-@DisplayName("Spartan Test with a Path variable and query param")
-public class SpartanTest_PathVariableQuerryParam extends SpartanNoAuthBaseTest {
+@DisplayName("Spartan Test with a Path variable")
+public class SpartanTest_PathVariable extends SpartanNoAuthBaseTest {
 
     @Test
     public void getOneSpartan(){
@@ -37,12 +37,22 @@ public class SpartanTest_PathVariableQuerryParam extends SpartanNoAuthBaseTest {
                 .prettyPeek()
                 ;
 
-
-
-
-
-
 }
+@DisplayName("Logging the request")
+@Test
+    public void getOneSpartanWithLog(){}
+
+    Response response =
+            given()
+                    .log()
+                    .all()
+                    .accept("application/json")
+            .pathParam("id", "215")
+            .when()
+            .get("/spartans/{id}")
+            .prettyPeek()
+            ;
+
 
 
 }
