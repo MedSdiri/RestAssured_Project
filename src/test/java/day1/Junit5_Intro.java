@@ -1,4 +1,4 @@
-package day2;
+package day1;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
