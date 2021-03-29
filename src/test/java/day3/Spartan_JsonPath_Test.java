@@ -16,6 +16,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import test_util.SpartanNoAuthBaseTest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Spartan_JsonPath_Test extends SpartanNoAuthBaseTest{
@@ -107,6 +109,19 @@ public class Spartan_JsonPath_Test extends SpartanNoAuthBaseTest{
                         .get("/spartans/search")
                         .prettyPeek()
                         .jsonPath();
+
+        System.out.println("jp.getList(\"content.id\") = " + jp.getList("content.id"));
+        System.out.println("jp.getList(\"content.name\") = " + jp.getList("content.name"));
+        System.out.println("jp.getList(\"content.phone\") = " + jp.getList("content.phone"));
+
+        List<Integer> allId = jp.getList("content.id");
+        List<Integer> allId2 = jp.getList("content.id", Integer.class);
+
+        List<String> allNames = jp.getList("content.name", String.class);
+        List<String> allNames2 = jp.getList("content.name");
+
+        List<Long> allPhone = jp.getList("content.phone");
+        List<Long> allPhone2 = jp.getList("content.phone", Long.class);
     }
 
 
