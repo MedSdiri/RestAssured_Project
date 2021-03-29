@@ -59,6 +59,40 @@ public class Spartan_JsonPath_Test extends SpartanNoAuthBaseTest{
 
         System.out.println("jp.getInt(\"id[0]\") = " + jp.getInt("id[0]"));
         System.out.println("jp.getString(\"name[1]\") = " + jp.getString("name[1]"));
+
+        //System.out.println("jp.getString(\"[0]\") = " + jp.getString("[0]"));
+        System.out.println("jp.getMap(\"[0]\") = " + jp.getMap("[0]"));
+
+        System.out.println("jp.getInt(\"[0].id\") = " + jp.getInt("[0].id"));
+    }
+
+    @DisplayName("Extract data from GET /spartans/search ")
+    @Test
+    public void testGetSearchSpartans(){
+    //http://18.235.32.166:8000/api/spartans/search
+        // ?nameContains=Abigale&gender=Male
+
+        JsonPath jp =
+                given()
+                .queryParam("nameContains", "Abigale")
+                .queryParam("gender", "Male")
+                .log()
+                .all()
+        .when()
+        .get("/spartans/search")
+        .jsonPath()
+        ;
+
+        System.out.println("jp.getInt(\"content[0].id\") = " + jp.getInt("content[0].id"));
+
+        System.out.println("jp.getString(\"content[1].name\") = " + jp.getString("content[1].name"));
+
+        //Store first json object into a map
+        Map<String, Object> firstResultMap = jp.getMap("content[0]");
+
+        System.out.println("firstResultMap = " + firstResultMap);
+
+
     }
 
 
