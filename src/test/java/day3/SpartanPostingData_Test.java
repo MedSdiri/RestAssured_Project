@@ -1,6 +1,7 @@
 package day3;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import pojo.Spartan;
 import test_util.SpartanNoAuthBaseTest;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -107,7 +108,7 @@ public class SpartanPostingData_Test extends SpartanNoAuthBaseTest{
     @DisplayName("POST /spartans with POJO")
     @Test
     public void testPostDataWithPOJOAsBody(){
-        // Spartan sp = new Spartan("Abigale","Female",1800233232L) ;
+        Spartan sp = new Spartan("Janell","Female",1800233232L) ;
         // turn into below
         /*
          {
@@ -116,6 +117,18 @@ public class SpartanPostingData_Test extends SpartanNoAuthBaseTest{
             "phone": 1800233232
         }
          */
+        given()
+                .log()
+                .all()
+                .contentType(ContentType.JSON)
+                .body(sp)
+                .when()
+                .post("/spartans")
+                .then()
+                .log()
+                .all()
+                .statusCode(201)
+                ;
     }
 
 
