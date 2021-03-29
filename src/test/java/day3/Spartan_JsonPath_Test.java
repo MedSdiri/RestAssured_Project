@@ -35,6 +35,11 @@ public class Spartan_JsonPath_Test extends SpartanNoAuthBaseTest{
         myId = jp.getInt("id");
         System.out.println("myId = " + myId);
 
+        long phoneNum = jp.getLong("phone");
+        System.out.println("phoneNum = " + phoneNum);
+
+        System.out.println("jp.getMap(\"\") = " + jp.getMap(""));
+
     }
 
 
