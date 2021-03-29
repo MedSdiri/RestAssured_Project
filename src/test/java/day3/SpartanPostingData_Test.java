@@ -104,5 +104,19 @@ public class SpartanPostingData_Test extends SpartanNoAuthBaseTest{
 
     }
 
+    @DisplayName("POST /spartans with POJO")
+    @Test
+    public void testPostDataWithPOJOAsBody(){
+        // Spartan sp = new Spartan("Abigale","Female",1800233232L) ;
+        // turn into below
+        /*
+         {
+            "name": "Abigale",
+            "gender": "Female",
+            "phone": 1800233232
+        }
+         */
+    }
+
 
     }
