@@ -15,6 +15,9 @@ import static org.hamcrest.Matchers.* ;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import test_util.SpartanNoAuthBaseTest;
+
+import java.util.Map;
+
 public class Spartan_JsonPath_Test extends SpartanNoAuthBaseTest{
 
     @Test
@@ -40,6 +43,22 @@ public class Spartan_JsonPath_Test extends SpartanNoAuthBaseTest{
 
         System.out.println("jp.getMap(\"\") = " + jp.getMap(""));
 
+        Map<String, Object> resultJsonMap = jp.getMap("");
+
+        System.out.println("resultJsonMap = " + resultJsonMap);
+
+    }
+
+    @DisplayName("Extract data from GET /spartans")
+    @Test
+    public void testGetAllSpartans(){
+       // Response response = get("/spartans");
+       // response.prettyPrint();
+
+        JsonPath jp = get("/spartans").jsonPath();
+
+        System.out.println("jp.getInt(\"id[0]\") = " + jp.getInt("id[0]"));
+        System.out.println("jp.getString(\"name[1]\") = " + jp.getString("name[1]"));
     }
 
 
