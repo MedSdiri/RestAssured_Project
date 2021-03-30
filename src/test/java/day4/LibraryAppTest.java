@@ -87,5 +87,34 @@ public class LibraryAppTest {
 
 
 
+
+
+    }
+
+    @DisplayName("Test GET /dashboard_stats endpoint")
+    @Test
+    public void testDashboardNumbers(){
+
+        String username = "librarian69@library" ;
+        String password =  "KNPXrm3S";
+        String myToken = given()
+                .contentType(ContentType.URLENC)
+                .formParam("email", username)
+                .formParam("password" , password).
+                        when()
+                .post("/login")
+                .path("token");
+
+        given()
+                .header("x-library-token", myToken)
+                .when()
+                .get("/dashboard_stats")
+                .then()
+                .log()
+                .all()
+                .statusCode(200)
+                ;
+
+
     }
 }
