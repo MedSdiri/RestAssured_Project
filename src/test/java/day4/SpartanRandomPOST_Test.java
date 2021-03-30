@@ -110,4 +110,30 @@ public class SpartanRandomPOST_Test extends SpartanNoAuthBaseTest {
 
     }
 
+    @DisplayName("POST /spartans and send GET /spartans/{id} to verify 2")
+    @Test
+    public void testAddOneDataThenGetOneDataToVerifyInTheChain(){
+        // send post request verify status code 201 then extract the id in the same method chain
+        Spartan randomPOJO = SpartanUtil.getRandomSpartanPOJO();
+
+        int newId =
+                given()
+                        .log().body()
+                        .contentType(ContentType.JSON)
+                        .body(randomPOJO)
+                .when()
+                        .post("/spartans")
+                .then()
+                        .log().body()
+                        .statusCode(201)
+                .extract()
+                .path("data.id")
+                //.jsonPath().getInt("data.id")
+
+                ;
+        System.out.println("newId = " + newId);
+
+
+    }
+
 }
