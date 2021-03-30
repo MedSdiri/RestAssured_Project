@@ -45,6 +45,44 @@ public class LibraryAppTest {
                 .statusCode(200)
                 .log()
                 .all()
+        .body("token", is(not(blankOrNullString())))
+                ;
+
+
+
+    }
+
+    @DisplayName("test the token")
+    @Test
+    public void testGetTokenDecodeToken(){
+        // first send request to POST /login extract token
+        // then send request to POST /decode to verify emails and other info
+        String username = "librarian69@library" ;
+        String password =  "KNPXrm3S";
+        String myToken =
+                given()
+                .log().all()
+                .contentType(ContentType.URLENC)
+                .formParam("email", username)
+                .formParam("password", password)
+                .when()
+                .post("/login")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .path("token")
+                ;
+        given()
+                .log().all()
+                .contentType(ContentType.URLENC)
+                .formParam("token", myToken)
+                .when()
+                .post("/decode")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("email", is(username))
                 ;
 
 
