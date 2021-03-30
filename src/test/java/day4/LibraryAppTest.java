@@ -113,8 +113,39 @@ public class LibraryAppTest {
                 .log()
                 .all()
                 .statusCode(200)
+        .body("book_count", is("2107"))
+        .body("borrowed_books", is("775"))
+        .body("users", is("8665"))
                 ;
+
+        JsonPath jp =
+        given()
+                .header("x-library-token", myToken)
+                .when()
+                .get("/dashboard_stats")
+                .then()
+                .statusCode(200)
+                .extract()
+                .jsonPath()
+                ;
+        assertThat(jp.getInt("book_count"), is(2107));
+        assertThat(jp.getInt("borrowed_books"), is(775));
+        assertThat(jp.getInt("users"), is(8665));
+
+
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }
