@@ -14,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 public class LibraryAppAuthorizedRequestTest extends LibraryAppBaseTest {
 
+
     @DisplayName("GET /get_user_by_id/{user_id}")
     @Test
     public void testOneUser(){
@@ -37,7 +38,6 @@ public class LibraryAppAuthorizedRequestTest extends LibraryAppBaseTest {
     @DisplayName("GET /get_all_users")
     @Test
     public void testGetAllUsers(){
-        String myToken = getToken("librarian69@library", "KNPXrm3S");
         System.out.println("myToken = " + myToken);
 
         given()
