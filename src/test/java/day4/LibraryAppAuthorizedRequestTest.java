@@ -2,16 +2,17 @@ package day4;
 
 
 import test_util.LibraryAppBaseTest;
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.hamcrest.Matchers.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+
 public class LibraryAppAuthorizedRequestTest extends LibraryAppBaseTest {
 
 
@@ -38,15 +39,22 @@ public class LibraryAppAuthorizedRequestTest extends LibraryAppBaseTest {
     @DisplayName("GET /get_all_users")
     @Test
     public void testGetAllUsers(){
-        System.out.println("myToken = " + myToken);
+        System.out.println("myToken = " + librarianToken);
 
+        List<String> allNames =
         given()
-                .header("x-library-token", myToken)
+                .header("x-library-token", librarianToken)
                 .when()
                 .get("/get_all_users")
                 .then()
                 .statusCode(200)
+        .extract()
+        .jsonPath()
+        .getList("name", String.class)
                 ;
+        assertThat(allNames, hasSize(8665));
+        Set<String> uniqueNames = new HashSet<>(allNames);
+        System.out.println("uniqueNames.size() = " + uniqueNames.size());
 
     }
 

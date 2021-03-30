@@ -7,14 +7,14 @@ import org.junit.jupiter.api.BeforeAll;
 import static io.restassured.RestAssured.*;
 
 public class LibraryAppBaseTest {
-     public static String myToken;
+     public static String librarianToken;
 
     @BeforeAll
     public static void init(){
 
         baseURI  = "http://library1.cybertekschool.com" ;
         basePath = "/rest/v1" ;
-        myToken =
+        librarianToken =
                 getToken("librarian69@library", "KNPXrm3S");
 
 
