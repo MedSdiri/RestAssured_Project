@@ -16,6 +16,19 @@ public class CSVFileSourceParamTest {
         System.out.println("cityArg = " + cityArg);
         System.out.println("zipArg = " + zipArg);
 
+        given()
+                .baseUri("https://api.zippopotam.us")
+                .pathParam("state", stateArg)
+                .pathParam("city", cityArg)
+                .log().uri()
+                .when()
+                .get("/us/{state}/{city}")
+                .then()
+                .statusCode(200)
+                .body("places", hasSize(zipArg))
+
+        ;
+
     }
 
 
