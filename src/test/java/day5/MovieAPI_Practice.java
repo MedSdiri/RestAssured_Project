@@ -45,6 +45,33 @@ public class MovieAPI_Practice {
 
     }
 
+    @DisplayName("Search movies response body validation in the chain ")
+    @Test
+    public void testSearch2() {
+        //GET http://www.omdbapi.com?s=Superman&type=series&Your_API_KEY_GOES_HERE
+        // if you do not have other place you are using it ,
+        // you directly provide your baseURI using baseURI method in given
+        given()
+                .baseUri("http://www.omdbapi.com")
+                .log().all()
+                .queryParam("apikey", "5b5d0fe8")
+                .queryParam("s", "Superman")
+                .queryParam("type", "series").
+        when()
+                .get().
+        then()
+                .log().all()
+                .statusCode(200)
+        .body("Search.Title", hasSize(10))
+        .body("Search[0].Title", containsString("Superman"))
+        .body("Search.Title", hasItem("Superman and Lois"))
+        .body("Search.Title", hasItems("Superman and Lois", "The New Adventures of Superman"))
+        .body("Search.Title", everyItem(containsString("Superman")))
+
+        ;
+
+    }
+
 
 
 
