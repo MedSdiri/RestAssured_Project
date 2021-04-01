@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParametrizedTestInJunit5 {
@@ -29,8 +30,20 @@ public class ParametrizedTestInJunit5 {
 
     @ParameterizedTest
     @ValueSource(shorts = {22030,22031, 22032, 22033 , 22034, 22035, 22036})
-    public void tesZipCodes(short codes){
-        System.out.println("codes = " + codes);
+    public void tesZipCodes(short zip){
+        System.out.println("codes = " + zip);
+
+        given()
+                .baseUri("https://api.zippopotam.us")
+                .log()
+                .all()
+                .pathParam("zipcode", zip)
+                .when()
+                .get("/us/{zipcode}")
+                .then()
+                .log().all()
+                .statusCode(200)
+                ;
 
     }
 
