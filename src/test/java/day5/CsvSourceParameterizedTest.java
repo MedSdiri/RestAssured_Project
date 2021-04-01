@@ -33,7 +33,7 @@ public class CsvSourceParameterizedTest {
             "VA, Fairfax",
             "TX, Arlington",
             "MA, Boston",
-            "NY, New York",
+            "TX, Dallas",
             "MD, Annapolis"
     })
     // Write a parameterized test for this request
@@ -41,7 +41,7 @@ public class CsvSourceParameterizedTest {
     public void testStateCityToZip(String stateArg, String cityArg){
         System.out.println("stateArg = " + stateArg);
         System.out.println("cityArg = " + cityArg);
-
+    int placeCount =
         given()
                 .baseUri("https://api.zippopotam.us")
                 .pathParam("state", stateArg)
@@ -50,9 +50,15 @@ public class CsvSourceParameterizedTest {
                 .when()
                 .get("/us/{state}/{city}")
                 .then()
-                .log().body()
+             //   .log().body()
                 .statusCode(200)
+        .extract()
+        .jsonPath()
+        .getList("places")
+        .size()
                 ;
+
+        System.out.println("placeCount = " + placeCount);
 
 
     }
