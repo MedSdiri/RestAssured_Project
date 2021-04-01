@@ -52,7 +52,7 @@ public class LibraryAppAuthorizedRequestTest extends LibraryAppBaseTest {
         .jsonPath()
         .getList("name", String.class)
                 ;
-        assertThat(allNames, hasSize(8665));
+        assertThat(allNames, hasSize(8733));
         Set<String> uniqueNames = new HashSet<>(allNames);
         System.out.println("uniqueNames.size() = " + uniqueNames.size());
 
