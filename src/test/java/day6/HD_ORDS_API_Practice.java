@@ -32,7 +32,28 @@ public class HD_ORDS_API_Practice {
     @Test
     public void testAllRegions(){
         get("/regions").prettyPeek() ;
+        //get("/regions").prettyPeek() ;
+        // log the request uri
+        // send GET /regions request
+        // log the response
+        // test status code is 200
+        // test the count is 4
+        // also test the size of items json array is 4
+
+        given()
+                .log().uri()
+                .when()
+                .get("/regions")
+                .then()
+                .log().all()
+                .statusCode(200)
+        .body("count", equalTo(4))
+        .body("items", hasSize(4))
+                ;
+
+
     }
+
 
 
 
