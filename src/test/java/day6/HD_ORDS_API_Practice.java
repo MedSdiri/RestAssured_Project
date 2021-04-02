@@ -12,22 +12,19 @@ import static org.hamcrest.Matchers.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import test_util.HR_ORDS_API_BaseTest;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-public class HD_ORDS_API_Practice {
+public class HD_ORDS_API_Practice extends HR_ORDS_API_BaseTest {
     //GET http://18.235.32.166:1000/ords/hr/api/regions
     // base_uri = http://18.235.32.166:1000
     // base_path =  /ords/hr/api
     // resources /regions
 
 
-    @BeforeAll
-    public static void init(){
-        baseURI = "http://54.92.150.105:1000";
-        basePath = "/ords/hr/api" ;
-    }
+
     @DisplayName("GET /regions test")
     @Test
     public void testAllRegions(){
@@ -50,8 +47,27 @@ public class HD_ORDS_API_Practice {
         .body("count", equalTo(4))
         .body("items", hasSize(4))
                 ;
+        // another style using Response
 
 
+
+
+    }
+
+
+    @DisplayName("GET /regions with Response")
+    @Test
+    public void testAllRegionsResponse(){
+        Response response =
+               given()
+                .log().uri()
+                .when()
+                .get("/regions")
+                .prettyPeek()
+                ;
+        assertThat(response.statusCode(), is(200));
+        assertThat(response.path("count"),is(4));
+        assertThat(response.path("items"), hasSize(4));
     }
 
 
@@ -61,8 +77,4 @@ public class HD_ORDS_API_Practice {
 
 
 
-    @AfterAll
-    public static void cleanUp(){
-        reset();
-    }
 }
