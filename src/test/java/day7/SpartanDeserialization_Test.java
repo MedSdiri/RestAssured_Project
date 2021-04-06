@@ -47,5 +47,32 @@ public class SpartanDeserialization_Test extends SpartanNoAuthBaseTest {
 
     }
 
+    @DisplayName("Get /spartans/search")
+    @Test
+    public void testSearch(){
+     Response response =
+        given()
+                .queryParam("nameContains", "a")
+                .queryParam("gender", "Male")
+                .when()
+                .get("/spartans/search");
+
+     JsonPath jp = response.jsonPath();
+     SpartanPojo sp = jp.getObject("content[0]", SpartanPojo.class);
+        System.out.println("sp = " + sp);
+
+        SpartanPojo sp1 =
+                given()
+                        .queryParam("nameContains", "a")
+                        .queryParam("gender", "Male")
+                        .when()
+                        .get("/spartans/search")
+                .jsonPath()
+                .getObject("content[0]", SpartanPojo.class)
+                ;
+        System.out.println("sp1 = " + sp1);
+
+    }
+
 
 }
