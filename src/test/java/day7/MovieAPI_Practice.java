@@ -2,9 +2,14 @@ package day7;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.common.input.LineSeparatorDetector;
 import pojo.Movie;
+import pojo.Rating;
 import pojo.SpartanPojo;
 import test_util.SpartanNoAuthBaseTest;
+
+import java.util.List;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -43,6 +48,24 @@ public class MovieAPI_Practice {
         System.out.println("m2 = " + m2);
 
 
+
+    }
+
+
+    @DisplayName("GET Search for avenger and save Ratings field into List<Rating>")
+    @Test
+    public void testMovieRatingToPOJO(){
+        List<Rating> allRating =
+        given()
+                .baseUri("http://www.omdbapi.com")
+                .queryParam("t", "Avenger")
+                .queryParam("apikey", "678655de")
+                .when()
+                .get()
+                .jsonPath()
+                .getList("Ratings", Rating.class);
+
+        System.out.println("allRating = " + allRating);
 
     }
 
