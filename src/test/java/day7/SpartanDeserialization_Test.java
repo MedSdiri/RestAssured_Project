@@ -1,5 +1,6 @@
 package day7;
 
+import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pojo.SpartanPojo;
@@ -37,6 +38,11 @@ public class SpartanDeserialization_Test extends SpartanNoAuthBaseTest {
         SpartanPojo sp = response.as(SpartanPojo.class);
 
         System.out.println("sp = " + sp);
+
+        JsonPath jp = response.jsonPath();
+
+        SpartanPojo sp1 = jp.getObject("", SpartanPojo.class);
+        System.out.println("sp1 = " + sp1);
 
 
     }
