@@ -3,6 +3,7 @@ package day7;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pojo.Country;
+import pojo.Employee;
 import pojo.Region;
 import test_util.HR_ORDS_API_BaseTest;
 import io.restassured.path.json.JsonPath;
@@ -49,6 +50,15 @@ public class HR_ORDS_API_Deserialization extends HR_ORDS_API_BaseTest {
         System.out.println("allCountries = " + allCountries);
     }
 
+
+    @Test
+    public void testAllEmployees(){
+        Employee e1 =
+                get("/employees")
+                .jsonPath()
+                .getObject("items[0]", Employee.class);
+        System.out.println("e1 = " + e1);
+    }
 
 
 }
