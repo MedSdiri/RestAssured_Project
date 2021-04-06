@@ -45,7 +45,7 @@ public class MovieAPI_Practice {
                         .when()
                         .get()
                 .as(Movie.class);
-        System.out.println("m2 = " + m2);
+        //System.out.println("m2 = " + m2);
 
 
 
