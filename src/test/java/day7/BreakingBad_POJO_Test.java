@@ -30,6 +30,12 @@ public class BreakingBad_POJO_Test {
     @Test
     public void testDeserialization(){
 
+        Character c1 =
+                get("/characters").jsonPath()
+                .getObject("[0]", Character.class);
+
+        System.out.println("c1 = " + c1);
+
 
     }
 
