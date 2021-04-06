@@ -36,8 +36,19 @@ public class HR_ORDS_API_Deserialization extends HR_ORDS_API_BaseTest {
     @Test
     public void testALlCountries(){
         Country c1 = new Country("AR", "Argentina", 1);
-        System.out.println(c1);
+        //System.out.println(c1);
+        Country thirdCountry = get("/countries")
+                .jsonPath()
+                .getObject("items[2]", Country.class);
+
+        List<Country> allCountries =
+                get("/countries")
+                .jsonPath().getList("items", Country.class);
+
+        System.out.println("thirdCountry = " + thirdCountry);
+        System.out.println("allCountries = " + allCountries);
     }
+
 
 
 }
