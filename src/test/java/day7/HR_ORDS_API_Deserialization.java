@@ -2,14 +2,11 @@ package day7;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pojo.Country;
-import pojo.Employee;
-import pojo.Region;
+import pojo.*;
 import test_util.HR_ORDS_API_BaseTest;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pojo.SpartanPojo;
 import test_util.SpartanNoAuthBaseTest;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -50,7 +47,7 @@ public class HR_ORDS_API_Deserialization extends HR_ORDS_API_BaseTest {
         System.out.println("allCountries = " + allCountries);
     }
 
-
+    @DisplayName("Get /employees")
     @Test
     public void testAllEmployees(){
         Employee e1 =
@@ -58,6 +55,20 @@ public class HR_ORDS_API_Deserialization extends HR_ORDS_API_BaseTest {
                 .jsonPath()
                 .getObject("items[0]", Employee.class);
         System.out.println("e1 = " + e1);
+    }
+
+    @DisplayName("Get /departments")
+    @Test
+    public void testAllDepartments(){
+
+        Department d1 =
+                get("/departments")
+                .jsonPath()
+                .getObject("items[0]", Department.class);
+
+        System.out.println("d1 = " + d1);
+
+
     }
 
 
