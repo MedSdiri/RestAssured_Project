@@ -2,6 +2,7 @@ package day7;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pojo.Movie;
 import pojo.SpartanPojo;
 import test_util.SpartanNoAuthBaseTest;
 import static io.restassured.RestAssured.*;
@@ -21,6 +22,27 @@ public class MovieAPI_Practice {
     @DisplayName("Get http://www.omdbapi.com/?t=Avenger&apikey=678655de")
     @Test
     public void testMovieToPojo(){
+        Movie m1 =
+                given()
+                .baseUri("http://www.omdbapi.com")
+                .queryParam("t", "Avenger")
+                .queryParam("apikey", "678655de")
+                .when()
+                .get()
+                .jsonPath()
+                .getObject("", Movie.class);
+        System.out.println("m1 = " + m1);
+        Movie m2 =
+                given()
+                        .baseUri("http://www.omdbapi.com")
+                        .queryParam("t", "Avenger")
+                        .queryParam("apikey", "678655de")
+                        .when()
+                        .get()
+                .as(Movie.class);
+        System.out.println("m2 = " + m2);
+
+
 
     }
 
