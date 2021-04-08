@@ -11,10 +11,15 @@ public abstract class HR_ORDS_API_BaseTest {
     public static void init(){
         baseURI = "http://54.92.150.105:1000";
         basePath = "/ords/hr/api" ;
+        String url = ConfigurationReader.getProperty("hr.database.url");
+        String username = ConfigurationReader.getProperty("hr.database.username");
+        String password = ConfigurationReader.getProperty("hr.database.password");
+        DB_Utility.createConnection(url,username,password);
     }
 
     @AfterAll
     public static void cleanUp(){
         reset();
+        DB_Utility.destroy();
     }
 }
