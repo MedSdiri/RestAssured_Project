@@ -24,8 +24,8 @@ public class SpartanAPI_DB_Test extends SpartanNoAuthBaseTest {
     @Test
     public void testDB_Connection(){
 
-        DB_Utility.runQuery("select * from spartans");
-        DB_Utility.displayAllData();
+        //DB_Utility.runQuery("select * from spartans");
+        //DB_Utility.displayAllData();
 
     }
 
@@ -48,6 +48,9 @@ public class SpartanAPI_DB_Test extends SpartanNoAuthBaseTest {
         .log().all()
         .statusCode(200)
         .body("id", is(spartanId))
+        .body("name", is(firstRowMap.get("NAME")))
+        .body("gender", is(firstRowMap.get("GENDER")))
+        .body("phone", is(Integer.parseInt(firstRowMap.get("PHONE"))))
         ;
 
     }
