@@ -30,7 +30,12 @@ public class FormulaOneAPI_Test {
             get("/drivers.json").jsonPath() ;
            Driver d1 = jp.getObject("MRData.DriverTable.Drivers[0]", Driver.class);
 
-        System.out.println("d1 = " + d1);
+        //System.out.println("d1 = " + d1);
+
+        List<Driver> drivers = jp.getList("MRData.DriverTable.Drivers", Driver.class);
+
+
+       drivers.forEach(driver -> {if(driver.getNationality().equalsIgnoreCase("American")) System.out.println(driver.getGivenName());});
 
 
     }
