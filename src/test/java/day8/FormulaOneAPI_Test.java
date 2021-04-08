@@ -26,6 +26,11 @@ public class FormulaOneAPI_Test {
     @Test
     public void testDrivers(){
 
+           JsonPath jp =
+            get("/drivers.json").jsonPath() ;
+           Driver d1 = jp.getObject("MRData.DriverTable.Drivers[0]", Driver.class);
+
+        System.out.println("d1 = " + d1);
 
 
     }
