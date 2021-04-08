@@ -21,6 +21,10 @@ public class HR_ORDS_API_DB_Test extends HR_ORDS_API_BaseTest {
         runQuery("SELECT * FROM REGIONS WHERE REGION_ID = 1");
         displayAllData();
 
+        // save expected data for region _id of 1 into List
+        List<String> expectedFirstRowList = getRowDataAsList(1);
+        System.out.println("expectedFirstRowList = " + expectedFirstRowList);
+
         Region r1 = given()
                 .pathParam("region_id", 1)
                 .get("/regions/{region_id}")
@@ -28,6 +32,8 @@ public class HR_ORDS_API_DB_Test extends HR_ORDS_API_BaseTest {
                 .getObject("items[0]", Region.class)
                 ;
         System.out.println("r1 = " + r1);
+        assertThat(r1.getRegion_id(), is(Integer.parseInt(expectedFirstRowList.get(0))));
+        assertThat(r1.getRegion_name(), is(expectedFirstRowList.get(1)));
 
         //get("/regions/{region_id}", 1)
 
