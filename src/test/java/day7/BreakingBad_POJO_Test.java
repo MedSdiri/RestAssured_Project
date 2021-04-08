@@ -34,7 +34,18 @@ public class BreakingBad_POJO_Test {
                 get("/characters").jsonPath()
                 .getObject("[0]", Character.class);
 
-        System.out.println("c1 = " + c1);
+        //System.out.println("c1 = " + c1);
+
+        List<Character> allCharacters = get("/characters")
+                .jsonPath()
+                .getList("", Character.class);
+
+        allCharacters.forEach(p-> { if(p.getAppearance().size()==1 && p.getAppearance().contains(3)) {
+            System.out.println(p.getName());
+
+        } });
+
+
 
 
     }
