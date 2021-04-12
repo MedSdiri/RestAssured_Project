@@ -1,4 +1,7 @@
 package day10;
+import io.restassured.http.ContentType;
+import io.restassured.path.xml.XmlPath;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -30,6 +33,47 @@ public class XML_ResponseTest extends SpartanWithAuthBaseTest {
     @DisplayName("Test GET / spartans xml response")
     @Test
     public void textXML(){
+        // provide credentials and provide header as xml and send request
+        // assert status code 200
+        // assert content type is xml
+        // assert first data name is Wonder Woman
+
+        given()
+                .auth().basic("user", "user")
+                .accept(ContentType.XML)
+                .when()
+                .get("/spartans")
+                .then()
+                .statusCode(200)
+                //.log().all()
+        .contentType(ContentType.XML)
+        .contentType(ContentType.XML)
+        .body("List.item[0].name", is("Meade"))
+        .body("List.item[0].id", is("1"))
+
+        ;
+
+    }
+
+    @DisplayName("Test GET / spartans xml response with xmlPath")
+    @Test
+    public void testXML_extractData(){
+        Response response = given()
+                .auth().basic("user","user")
+                .accept( ContentType.XML ).
+                        when()
+                .get("/spartans")
+                ;
+        XmlPath xp = response.xmlPath();
+        int firstId = xp.getInt("List.item[0].id");
+
+        System.out.println("firstId = " + firstId);
+        List<Integer> allIds = xp.getList("List.item.id");
+
+        System.out.println("allIds = " + allIds);
+
+        assertThat();
+
 
     }
 
