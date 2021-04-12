@@ -20,6 +20,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static test_util.DB_Utility.*;
 import test_util.SpartanNoAuthBaseTest;
 
@@ -66,13 +68,25 @@ public class XML_ResponseTest extends SpartanWithAuthBaseTest {
                 ;
         XmlPath xp = response.xmlPath();
         int firstId = xp.getInt("List.item[0].id");
+        String firstName = xp.getString("List.item[0].name");
+        long phone = xp.getLong("List.item[0].phone");
 
         System.out.println("firstId = " + firstId);
         List<Integer> allIds = xp.getList("List.item.id");
 
         System.out.println("allIds = " + allIds);
-
-        assertThat();
+//
+//        assertEquals(1 , firstId);
+//        assertEquals("Meade" , firstName);
+//        assertEquals(6105035231L , phone);
+//        assertEquals(329 , allIds.size());
+//
+        assertAll(
+                () -> assertEquals(1, firstId),
+                () -> assertEquals("Meade", firstName),
+                () -> assertEquals(6105035231L, phone),
+                () -> assertEquals(102, allIds.size())
+        );
 
 
     }
