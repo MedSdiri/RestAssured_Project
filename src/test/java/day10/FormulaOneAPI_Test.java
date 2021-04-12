@@ -72,6 +72,10 @@ public class FormulaOneAPI_Test {
                         when()
                 .get("/drivers/{driver_id}")
                 .xmlPath();
+        String driverCode = xp.getString("MRData.DriverTable.Driver.@code");
+        System.out.println("driverCode = " + driverCode);
+        String wikiUrl = xp.getString("MRData.DriverTable.Driver.@url");
+        System.out.println("wikiUrl = " + wikiUrl);
     }
 
 
