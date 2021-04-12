@@ -21,4 +21,14 @@ public class jsonSchemaValidationTest extends SpartanNoAuthBaseTest {
         .body(matchesJsonSchemaInClasspath("singleSpartanSchema.json"))
                 ;
     }
+
+    @DisplayName("check GET /spartans json schema")
+    @Test
+    public void testAllSpartansJsonSchema(){
+        when()
+                .get("/spartans")
+                .then()
+                .body(matchesJsonSchemaInClasspath("allSpartansSchema.json"))
+                ;
+    }
 }
