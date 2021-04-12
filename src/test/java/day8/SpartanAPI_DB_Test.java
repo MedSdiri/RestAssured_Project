@@ -1,20 +1,23 @@
 package day8;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import pojo.*;
 import pojo.Character;
-import test_util.HR_ORDS_API_BaseTest;
+import test_util.*;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import test_util.SpartanNoAuthBaseTest;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import test_util.ConfigurationReader;
-import test_util.DB_Utility;
+
+import static test_util.DB_Utility.*;
 import test_util.SpartanNoAuthBaseTest;
 
 import javax.swing.text.Style;
@@ -109,10 +112,94 @@ public class SpartanAPI_DB_Test extends SpartanNoAuthBaseTest {
         assertThat(actualResulat.getGender(), is(firstRowMap.get("GENDER")));
         assertThat(actualResulat.getPhone(), is(Long.parseLong(firstRowMap.get("PHONE"))));
 
+    }
+
+    @DisplayName("Spartan Home work GET /spartans/search")
+    @Test
+    public void spartanHomeWork(){
+
+       List<SpartanPojo> apiResult =
+        given()
+                .queryParam("nameContains", "a")
+                .queryParam("gender", "Female")
+                .when()
+                .get("/spartans/search")
+                .jsonPath()
+                .getList("content", SpartanPojo.class)
+        ;
+
+        runQuery("SELECT * FROM SPARTANS WHERE LOWER(NAME) LIKE '%a%' and GENDER = 'Female'");
+        List<Map<String, String>> dbResult = getAllRowAsListOfMap();
+
+        assertThat(apiResult.size(), is(dbResult.size()));
+
+
+        for (SpartanPojo spartan: apiResult) {
+            assertThat(spartan.getName().toLowerCase().contains("a"), is(true) );
+            assertThat(spartan.getGender(), is("Female"));
+
+        }
+
 
 
     }
 
+    @ParameterizedTest
+    @MethodSource("byPassGetSpartansAPI")
+    public void spartanHomeWorkMethodParam(SpartanPojo spartan){
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+    public static List<Map<String, String>> getSpartansDB(String name, String gender){
+
+        String query = "SELECT * FROM SPARTANS WHERE LOWER(NAME) LIKE '%"+name+"%' and GENDER = '"+gender+"'";
+
+        runQuery(query);
+        List<Map<String, String>> dbResult = getAllRowAsListOfMap();
+        return dbResult;
+    }
+
+    public static List<SpartanPojo> byPassGetSpartansAPI(){
+      return getSpartansAPI("a", "Female") ;
+    }
+    public static List<Map<String, String>> byPassGetSpartansDB(){
+        return getSpartansDB("a", "Female") ;
+    }
+
+    public static List<SpartanPojo> getSpartansAPI(String name, String gender){
+        List<SpartanPojo> apiResult =
+                given()
+                        .queryParam("nameContains", name)
+                        .queryParam("gender", gender)
+                        .when()
+                        .get("/spartans/search")
+                        .jsonPath()
+                        .getList("content", SpartanPojo.class)
+                ;
+        return apiResult;
+    }
+
+
+
+    /** TODO :
+     // AS HOMEWORK  GET /spartans/search
+     // search for nameContains a and Female
+     // compare DB Result total count with API Result total count
+     // SELECT * FROM SPARTANS WHERE LOWER(NAME) LIKE '%a%' and GENDER = 'Female'
+     // Make sure all your data in json array match exact criteria above (nameContains a and Female
+     // Optionally , Write a parametrized Test with multiple different search criteria
+     */
 
 
 

@@ -2,9 +2,9 @@ package day8;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import pojo.Region;
-import test_util.DB_Utility;
-import test_util.HR_ORDS_API_BaseTest;
 import test_util.HR_ORDS_API_BaseTest;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +62,41 @@ public class HR_ORDS_API_DB_Test extends HR_ORDS_API_BaseTest {
 
 
     }
+
+    @Test
+    public void regionsHomeWork(){
+        System.out.println(getAllRegionListOfMap());
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("getAllRegionListOfMap")
+    public void homeWorkRegionTask(Map<String, String> region){
+        System.out.println(region.get("REGION_NAME"));
+
+        given()
+                .pathParam("region_id", region.get("REGION_ID"))
+                .expect()
+                .body("items[0].region_name", is(region.get("REGION_NAME")))
+        .when()
+        .get("/regions/{region_id}")
+
+        ;
+
+    }
+
+    public static List<Map<String, String>> getAllRegionListOfMap(){
+        runQuery("SELECT * FROM REGIONS");
+
+        return getAllRowAsListOfMap();
+    }
+
+    /** TODO :
+     // HOMEWORK : RUN QUERY  runQuery("SELECT * FROM REGIONS") save result as List of Map
+     // Write a method to return above List of Map called getAllRegionListOfMap
+     // Write a parameterized Test for GET /regions/{region_id}
+     // Use getAllRegionListOfMap method as Method Source for your Parameterized Test
+     */
 
 
 }
