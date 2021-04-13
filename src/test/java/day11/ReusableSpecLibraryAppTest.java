@@ -11,8 +11,7 @@ public class ReusableSpecLibraryAppTest extends LibraryAppBaseTest {
     @DisplayName("GET/dashboard_stats")
     @Test
     public void testDashboardStats(){
-        RequestSpecification librarianSpec = given()
-                .header("x-library-token",librarianToken);
+
 
 
         given()
