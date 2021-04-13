@@ -1,7 +1,9 @@
 package test_util;
 
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -10,6 +12,7 @@ import static io.restassured.RestAssured.*;
 public class LibraryAppBaseTest {
      public static String librarianToken;
      public static RequestSpecification librarianSpec;
+     public static ResponseSpecification librarianResponseSpec;
 
     @BeforeAll
     public static void init(){
@@ -20,6 +23,9 @@ public class LibraryAppBaseTest {
                 getToken("librarian69@library", "KNPXrm3S");
         librarianSpec = given()
                 .header("x-library-token",librarianToken);
+        librarianResponseSpec = expect().statusCode(200)
+                .contentType(ContentType.JSON)
+                .logDetail(LogDetail.ALL);
 
 
         String url = ConfigurationReader.getProperty("library1.database.url");
