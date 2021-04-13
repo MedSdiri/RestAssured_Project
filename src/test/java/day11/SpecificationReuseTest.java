@@ -1,4 +1,5 @@
 package day11;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
@@ -13,10 +14,12 @@ import test_util.SpartanWithAuthBaseTest;
 public class SpecificationReuseTest extends SpartanWithAuthBaseTest {
     private static RequestSpecification requestSpec =
             given()
+                    .log().all()
                     .auth().basic("admin", "admin")
                     .accept(ContentType.JSON)
             ;
     private static ResponseSpecification responseSpec = expect()
+            .logDetail(LogDetail.ALL)
             .statusCode(200)
             .contentType(ContentType.JSON)
             ;
@@ -40,15 +43,17 @@ public class SpecificationReuseTest extends SpartanWithAuthBaseTest {
     @Test
     public void testAdminGetOne(){
         given()
-                .auth().basic("admin", "admin")
-                .accept(ContentType.JSON)
+                .spec(requestSpec)
+//                .auth().basic("admin", "admin")
+//                .accept(ContentType.JSON)
                 .pathParam("id", 1)
                 .when()
                 .get("/spartans/{id}")
                 .then()
-                .log().body()
-                .statusCode(200)
-                .contentType(ContentType.JSON)
+                //.log().body()
+        .spec(responseSpec)
+//                .statusCode(200)
+//                .contentType(ContentType.JSON)
         ;
     }
 }
